@@ -1,4 +1,4 @@
-package bedrock
+package main
 
 import (
 	"encoding/base64"

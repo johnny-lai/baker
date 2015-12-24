@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/codegangsta/cli"
-	"github.com/johnny-lai/bedrock"
 	"log"
 	"os"
 	"path/filepath"
@@ -38,7 +37,7 @@ func executeTemplate(src string, dest string) error {
     return err
   }
 
-  tc := bedrock.TemplateContext{}
+  tc := TemplateContext{}
   err = tmpl.Execute(fd, &tc)
   if err != nil {
     log.Fatal(err)
@@ -49,7 +48,7 @@ func executeTemplate(src string, dest string) error {
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "bedrock"
+	app.Name = "baker"
 	app.Version = version
 	app.Usage = "A microservice structure for Go"
 	app.Flags = []cli.Flag{
@@ -71,7 +70,7 @@ func main() {
 					return
 				}
 
-				tc := bedrock.TemplateContext{}
+				tc := TemplateContext{}
 				err = tmpl.Execute(os.Stdout, &tc)
 				if err != nil {
 					log.Fatal(err)
