@@ -36,6 +36,12 @@ distbuild:
 	           $(DOCKER_DEVIMAGE) \
 	           make build
 
+distclean:
+	$(DOCKER) run --rm \
+	           $(DOCKER_OPTS) \
+	           $(DOCKER_DEVIMAGE) \
+	           make clean
+
 distpush: image-dist.push image-testdb.push
 
 distpublish: image-dist.publish image-testdb.publish

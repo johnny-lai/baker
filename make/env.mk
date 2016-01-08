@@ -62,14 +62,10 @@ KUBERNETES_CONFIG ?= $(BEDROCK_ROOT)/make/kubernetes.config.default
 GLIDE = $(GOPATH)/bin/glide
 CLUSTER_SH = $(BEDROCK_ROOT)/scripts/cluster.sh
 
-# Directory of gin. Used to detect if `glide update` is needed
-GIN_ROOT = $(SRCROOT)/vendor/github.com/gin-gonic/gin
+# Basic dependencies to build programs
+deps:
 
-# Basic dependencies to build go programs
-GO_BASE_DEPENDENCIES = $(GLIDE) $(BUILD_ROOT) $(GIN_ROOT)
-deps: #$(GO_BASE_DEPENDENCIES)
-
-$(GLIDE): $(SRCROOT)/glide.yaml
+$(GLIDE):
 	go get github.com/Masterminds/glide
 
 $(BUILD_ROOT):
@@ -77,8 +73,5 @@ $(BUILD_ROOT):
 
 $(APP_SECRETS_ROOT):
 	mkdir -p $@
-
-$(GIN_ROOT): $(SRCROOT)/glide.yaml
-	$(GLIDE) update
 
 .PHONY: deps

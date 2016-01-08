@@ -14,12 +14,24 @@ APP_GO_LINKING ?= static
 APP_GO_SOURCES ?= main.go
 APP_GO_PACKAGES ?= $(APP_NAME) $(APP_NAME)/core/service
 
+#- Build -----------------------------------------------------------------------
 $(APP): $(APP_GO_SOURCES)
 	$(GO_ENV) go build $(GO_CFLAGS) \
 		-o $@ \
 		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
 		$(APP_GO_SOURCES)
 
+#- Dependencies ----------------------------------------------------------------
+# Directory of logrus. Used to detect if `glide update` is needed
+LOGRUS_ROOT = $(SRCROOT)/vendor/github.com/Sirupsen/logrus
+
+# Basic dependencies to build go programs
+deps: $(GLIDE) $(BUILD_ROOT) $(LOGRUS_ROOT)
+
+$(LOGRUS_ROOT): $(SRCROOT)/glide.yaml
+	$(GLIDE) update
+
+#- Clean -----------------------------------------------------------------------
 clean: clean.go
 
 clean.go:
