@@ -37,7 +37,7 @@ TESTDB_DOCKER_LABEL_COMMIT = $(TESTDB_DOCKER_LABEL):$(COMMIT)
 # Docker commands
 DOCKER_DEV_UID ?= $(shell which docker-machine &> /dev/null || id -u)
 DOCKER_DEV_GID ?= $(shell which docker-machine &> /dev/null || id -g)
-DOCKER_OPTS ?= -it -v $(SRCROOT):$(SRCROOT_D) \
+DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
                -v $(KUBERNETES_CONFIG):/home/dev/.kube/config \
                -v $(KUBERNETES_CONFIG):/root/.kube/config \
                -v $(APP_SECRETS_ROOT):$(APP_SECRETS_ROOT_D) \
