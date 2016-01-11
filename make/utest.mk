@@ -15,6 +15,7 @@ distutest.run:
 	           -e DEV_UID=$(DOCKER_DEV_UID) \
 	           -e DEV_GID=$(DOCKER_DEV_GID) \
 	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
+	           $(DOCKER_UTEST_OPTS) \
 	           $(DOCKER_DEVIMAGE) \
 	           make utest
 else
@@ -33,6 +34,7 @@ distutest.run:
 	           -e DEV_UID=$(DOCKER_DEV_UID) \
 	           -e DEV_GID=$(DOCKER_DEV_GID) \
 	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
+	           $(DOCKER_UTEST_OPTS) \
 	           $(DOCKER_DEVIMAGE) \
 	           make utest
 
