@@ -13,6 +13,7 @@ FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 APP_GO_LINKING ?= static
 APP_GO_SOURCES ?= main.go
 APP_GO_PACKAGES ?= $(APP_NAME) $(APP_NAME)/core/service
+APP_GO_GLIDE_CHECK ?= vendor/github.com/onsi/ginkgo/README.md
 
 #- Build -----------------------------------------------------------------------
 $(APP): $(APP_GO_SOURCES)
@@ -22,15 +23,16 @@ $(APP): $(APP_GO_SOURCES)
 		$(APP_GO_SOURCES)
 
 #- Dependencies ----------------------------------------------------------------
-# Directory of logrus. Used to detect if `glide update` is needed
-LOGRUS_ROOT = $(SRCROOT)/vendor/github.com/Sirupsen/logrus
 
 # Basic dependencies to build go programs
-deps: $(GLIDE) $(BUILD_ROOT) $(LOGRUS_ROOT)
+deps: $(GLIDE) $(BUILD_ROOT) $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
 
-$(LOGRUS_ROOT): $(SRCROOT)/glide.yaml
+$(SRCROOT)/$(APP_GO_GLIDE_CHECK): $(SRCROOT)/glide.yaml
 	$(GLIDE) update
 
+glide_touch:
+	touch $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
+  
 #- Clean -----------------------------------------------------------------------
 clean: clean.go
 
