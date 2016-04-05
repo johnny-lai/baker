@@ -1,8 +1,6 @@
-# bedrock
+# baker
 
-Bedrock is meant to provide a base on which to build your Go microservice. It comes with a `Makefile` that
-can build, test and benchmark your service. The rules are written so that the build machine only needs `docker`
-to be installed.
+Baker comes with a `Makefile` that can build, test and benchmark your go or Swift application. The rules are written so that the build machine only needs `docker` to be installed.
 
 ## Installation
 
@@ -23,21 +21,23 @@ to be installed.
    $ git init
    ```
 
-3. Add bedrock as a submodule
+3. Add baker as a submodule
    
+   In golang, you can place it in:
    ```
-   $ git submodule add -f https://github.com/johnny-lai/bedrock.git vendor/github.com/johnny-lai/bedrock
+   $ git submodule add -f https://github.com/johnny-lai/baker.git vendor/github.com/johnny-lai/baker
    ```
+   
+   In Swift, you can place it in:
+   ```
+   $ git submodule add -f https://github.com/johnny-lai/baker.git vendor/baker
+   ```
+   
+   You can actually use a different directory, than above.
+   
+4. Include the `boot.mk` into your Makefile to get all the baker build rules
 
-4. Include the `boot.mk` into your Makefile to get all the bedrock build rules
-
-   This is the minimal sample:
-   ```
-   APP_NAME = your-app-name
-   include vendor/github.com/johnny-lai/bedrock/boot.mk
-   ```
-
-   This is a sample with all the options:
+   This is a golang sample:
    ```
    APP_NAME = your-app-name
    APP_DOCKER_LABEL = your-docker-label  # Used for generating docker container labels
@@ -45,7 +45,14 @@ to be installed.
    APP_GO_PACKAGES = packages  # Set to all the go package names that make up your service
    APP_GO_SOURCES = file.go    # Set to all the go source files used to build your main service
                                # Defaults to main.go
-   include vendor/github.com/johnny-lai/bedrock/boot.mk 
+   include vendor/github.com/johnny-lai/baker/boot.mk 
+   include vendor/github.com/johnny-lai/baker/golang.mk 
+   ```
+   
+   This is a Swift sample:
+   ```
+   include vendor/baker/boot.mk
+   include vendor/baker/swift.mk
    ```
 	 
 5. Commit your changes now. If you don't have a commit number, you will get a lot of warning messages during build.
@@ -146,6 +153,10 @@ $ dlv debug
 * `distutest`: Runs the unit tests in docker
 * `distitest`: Runs the integration tests in docker
 * `distibench`: Runs the benchmark tests in docker
+* `build`: Builds the application locally
+* `utest`: Runs unit tests locally
+* `itest`: Runs integration tests locally
+* `ibench`: Runs benchmark tests locally
 * `fmt`: Runs `go fmt` on your Go packages
 * `devconsole`: Enters the container image. Useful for starting kubernetes or running delve.
 
