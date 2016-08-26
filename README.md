@@ -25,7 +25,7 @@ Baker comes with a `Makefile` that can build, test and benchmark your go or Swif
    
    In golang, you can place it in:
    ```
-   $ git submodule add -f https://github.com/johnny-lai/baker.git vendor/github.com/johnny-lai/baker
+   $ git submodule add -f https://github.com/johnny-lai/baker.git baker
    ```
    
    In Swift, you can place it in:
@@ -45,8 +45,8 @@ Baker comes with a `Makefile` that can build, test and benchmark your go or Swif
    APP_GO_PACKAGES = packages  # Set to all the go package names that make up your service
    APP_GO_SOURCES = file.go    # Set to all the go source files used to build your main service
                                # Defaults to main.go
-   include vendor/github.com/johnny-lai/baker/boot.mk 
-   include vendor/github.com/johnny-lai/baker/golang.mk 
+   include baker/boot.mk 
+   include baker/golang.mk 
    ```
    
    This is a Swift sample:

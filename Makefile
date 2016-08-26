@@ -4,9 +4,6 @@ DOCKER ?= docker
 
 IMAGE_NAME = johnnylai/bedrock-dev
 
-build:
-	go build cli/bedrock.go
-
 fmt:
 	go fmt
 
