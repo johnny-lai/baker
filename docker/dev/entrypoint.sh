@@ -3,12 +3,13 @@
 USER=root
 
 if [ $(whoami) == 'root' ] && [ $DEV_UID ]; then
+	rm -rf /home/dev
+
 	groupadd --gid $DEV_GID dev
 	adduser --disabled-password --gecos '' --uid $DEV_UID --gid $DEV_GID dev
 	# adduser dev sudo
 	# echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-	chown -R dev.dev /home/dev
 	USER=dev
 fi
 
