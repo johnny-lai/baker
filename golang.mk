@@ -7,7 +7,7 @@ else
 	GO_CFLAGS ?=
 endif
 
-DOCKER_DEVIMAGE ?= johnnylai/bedrock-dev-golang:1.5
+DOCKER_DEVIMAGE ?= johnnylai/bedrock-dev-golang:1.7
 FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 
 APP_GO_LINKING ?= static

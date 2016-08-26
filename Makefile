@@ -12,7 +12,7 @@ fmt:
 
 image.dev.golang:
 	$(DOCKER) build -t $(IMAGE_NAME)-golang -f docker/dev/golang.dockerfile .
-	$(DOCKER) tag -f $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:1.5
+	$(DOCKER) tag -f $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:1.7
 	$(DOCKER) tag -f $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:$(COMMIT)
 
 image.swift:

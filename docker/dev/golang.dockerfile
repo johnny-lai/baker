@@ -1,4 +1,4 @@
-FROM golang:1.5
+FROM golang:1.7
 
 # Install go
 RUN go get -u github.com/derekparker/delve/cmd/dlv && \
