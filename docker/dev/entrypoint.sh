@@ -8,6 +8,7 @@ if [ $(whoami) == 'root' ] && [ $DEV_UID ]; then
 	# adduser dev sudo
 	# echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+	chown -R dev.dev /home/dev
 	USER=dev
 fi
 
