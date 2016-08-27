@@ -20,7 +20,7 @@ APP_ITEST_ENV_ROOT ?= $(SRCROOT)/itest/env
 APP ?= $(BUILD_ROOT)/$(APP_NAME)
 
 # These are paths used in the docker image
-SRCROOT_D = /go/src/$(APP_NAME)
+SRCROOT_D = /go/src/`basename $(SRCROOT)`
 BUILD_ROOT_D = $(SRCROOT_D)/tmp/dist
 BEDROCK_ROOT_D = $(SRCROOT_D)/vendor/github.com/johnny-lai/bedrock
 TEST_CONFIG_YML_D = $(SRCROOT_D)/config/production.yml
