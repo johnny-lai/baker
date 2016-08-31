@@ -17,7 +17,6 @@ fmt:
 
 devconsole:
 	docker run --rm \
-	           --net=host \
 	           -v `which docker`:/bin/docker \
 	           -v /var/run/docker.sock:/var/run/docker.sock \
 	           -v /lib64/libdevmapper.so.1.02:/lib/libdevmapper.so.1.02 \

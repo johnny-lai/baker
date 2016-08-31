@@ -49,7 +49,7 @@ DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
                -e BUILD_NUMBER=$(BUILD_NUMBER) \
                -e DEV_UID=$(DOCKER_DEV_UID) \
                -e DEV_GID=$(DOCKER_DEV_GID) \
-               --dns 8.8.8.8
+               --net=host
 DOCKER ?= docker
 ifneq ($(findstring gcr.io/,$(APP_DOCKER_LABEL)),)
 	DOCKER_PUSH ?= gcloud docker push
