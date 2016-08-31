@@ -20,7 +20,7 @@ distutest.run:
 	           make utest
 else
 #- Has Test Database -----------------------------------------------------------
-distutest.env:
+distutest.env: image-testdb
 	-$(DOCKER) rm -f $(APP_NAME)-testdb
 	$(DOCKER) run -d --name $(APP_NAME)-testdb $(APP_DOCKER_LABEL)-testdb
 	sleep 5
