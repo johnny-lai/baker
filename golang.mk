@@ -28,7 +28,7 @@ $(APP): $(APP_GO_SOURCES)
 deps: $(GLIDE) $(BUILD_ROOT) $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
 
 $(SRCROOT)/$(APP_GO_GLIDE_CHECK): $(SRCROOT)/glide.yaml
-	$(GLIDE) update
+	$(GLIDE) install
 
 glide_touch:
 	touch $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
