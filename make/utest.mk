@@ -9,12 +9,8 @@ distutest.env:
 
 distutest.run:
 	$(DOCKER) run --rm \
-	           -v $(SRCROOT):$(SRCROOT_D) \
-	           -v $(APP_SECRETS_ROOT):/etc/secrets \
-	           -w $(SRCROOT_D) \
-	           -e DEV_UID=$(DOCKER_DEV_UID) \
-	           -e DEV_GID=$(DOCKER_DEV_GID) \
 	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
+	           $(DOCKER_OPTS) \
 	           $(DOCKER_UTEST_OPTS) \
 	           $(DOCKER_DEVIMAGE) \
 	           make utest
@@ -28,12 +24,8 @@ distutest.env: image-testdb
 distutest.run:
 	$(DOCKER) run --rm \
 	           --link $(APP_NAME)-testdb:$(APP_NAME)-db \
-	           -v $(SRCROOT):$(SRCROOT_D) \
-	           -v $(APP_SECRETS_ROOT):/etc/secrets \
-	           -w $(SRCROOT_D) \
-	           -e DEV_UID=$(DOCKER_DEV_UID) \
-	           -e DEV_GID=$(DOCKER_DEV_GID) \
 	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
+	           $(DOCKER_OPTS) \
 	           $(DOCKER_UTEST_OPTS) \
 	           $(DOCKER_DEVIMAGE) \
 	           make utest

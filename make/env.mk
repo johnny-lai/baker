@@ -36,6 +36,18 @@ TESTDB_DOCKER_LABEL_VERSION = $(TESTDB_DOCKER_LABEL):$(MAJOR_VERSION).$(MINOR_VE
 TESTDB_DOCKER_LABEL_COMMIT = $(TESTDB_DOCKER_LABEL):$(COMMIT)
 
 # Docker commands
+DOCKER_VER_NUM ?= $(shell docker --version | cut -f1 "-d," | cut -f3 "-d ")
+DOCKER_VER_MAJOR := $(shell echo $(DOCKER_VER_NUM) | cut -f1 -d.)
+DOCKER_VER_MINOR := $(shell echo $(DOCKER_VER_NUM) | cut -f2 -d.)
+DOCKER_GT_1_12 := $(shell [ $(DOCKER_VER_MAJOR) -gt 1 -o \( $(DOCKER_VER_MAJOR) -eq 1 -a $(DOCKER_VER_MINOR) -ge 12 \) ] && echo true)
+
+ifeq ($(DOCKER_GT_1_12),true)
+DOCKER_OPT_TAG_FORCE=
+else
+DOCKER_OPT_TAG_FORCE=-f
+endif
+
+
 DOCKER_DEV_UID ?= $(shell which docker-machine &> /dev/null || id -u)
 DOCKER_DEV_GID ?= $(shell which docker-machine &> /dev/null || id -g)
 DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
@@ -44,12 +56,13 @@ DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
                -v $(APP_SECRETS_ROOT):$(APP_SECRETS_ROOT_D) \
                -w $(SRCROOT_D) \
                -e "DOCKER=$(DOCKER)" \
+               -e "DOCKER_VER_NUM=$(DOCKER_VER_NUM)" \
                -e BUILD_ROOT=$(BUILD_ROOT_D) \
                -e APP_SECRETS_ROOT=$(APP_SECRETS_ROOT_D) \
                -e BUILD_NUMBER=$(BUILD_NUMBER) \
                -e DEV_UID=$(DOCKER_DEV_UID) \
                -e DEV_GID=$(DOCKER_DEV_GID) \
-               --net=host
+               --net=bridge
 DOCKER ?= docker
 ifneq ($(findstring gcr.io/,$(APP_DOCKER_LABEL)),)
 	DOCKER_PUSH ?= gcloud docker push
