@@ -1,5 +1,5 @@
 utest: deps
-	TEST_CONFIG_YML=$(TEST_CONFIG_YML) GO15VENDOREXPERIMENT=1 go test $(APP_GO_PACKAGES)
+	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) GO15VENDOREXPERIMENT=1 go test $(APP_GO_PACKAGES)
 
 distutest: distutest.env distutest.run
 
@@ -16,9 +16,11 @@ distutest.run:
 	           make utest
 else
 #- Has Test Database -----------------------------------------------------------
-distutest.env: image-testdb
+distutest.testdb.run: image-testdb
 	-$(DOCKER) rm -f $(APP_NAME)-testdb
-	$(DOCKER) run -d --name $(APP_NAME)-testdb $(APP_DOCKER_LABEL)-testdb
+	$(DOCKER) run -d -P --name $(APP_NAME)-testdb $(APP_DOCKER_LABEL)-testdb
+
+distutest.env: distutest.testdb.run
 	sleep 5
 
 distutest.run:
