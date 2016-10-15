@@ -1,6 +1,5 @@
 default: build
 
-BEDROCK_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 include $(BEDROCK_ROOT)/make/env.mk
 include $(BEDROCK_ROOT)/make/bedrock.mk
 include $(BEDROCK_ROOT)/make/build.mk
@@ -17,10 +16,6 @@ fmt:
 
 devconsole:
 	docker run --rm \
-	           -v `which docker`:/bin/docker \
-	           -v /var/run/docker.sock:/var/run/docker.sock \
-	           -v /lib64/libdevmapper.so.1.02:/lib/libdevmapper.so.1.02 \
-	           -v /lib64/libudev.so.0:/lib/libudev.so.0 \
 	           -e GO15VENDOREXPERIMENT=1 \
 	           -it \
 	           $(DOCKER_OPTS) \

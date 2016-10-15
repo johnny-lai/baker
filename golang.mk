@@ -1,3 +1,6 @@
+BEDROCK_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+include $(BEDROCK_ROOT)/boot.mk
+
 # GO flags
 ifeq ($(APP_GO_LINKING), static)
 	GO_ENV ?= GO15VENDOREXPERIMENT=1 CGO_ENABLED=0

@@ -15,11 +15,11 @@ image.dev.golang:
 	$(DOCKER) tag $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:$(COMMIT)
 
 image.swift:
-	$(DOCKER) build -t johnnylai/swift:2.2 -f docker/swift/Dockerfile .
+	$(DOCKER) build -t johnnylai/swift:3.0 -f docker/swift/Dockerfile .
 
 image.dev.swift: image.swift
 	$(DOCKER) build -t $(IMAGE_NAME)-swift -f docker/dev/swift.dockerfile .
-	$(DOCKER) tag $(IMAGE_NAME)-swift $(IMAGE_NAME)-swift:2.2
+	$(DOCKER) tag $(IMAGE_NAME)-swift $(IMAGE_NAME)-swift:3.0
 	$(DOCKER) tag $(IMAGE_NAME)-swift $(IMAGE_NAME)-swift:$(COMMIT)
 
 deploy.dev.golang: image.dev.golang
@@ -28,6 +28,6 @@ deploy.dev.golang: image.dev.golang
 	
 deploy.dev.swift: image.dev.swift
 	$(DOCKER) push $(IMAGE_NAME)-swift
-	$(DOCKER) push $(IMAGE_NAME)-swift:2.2
+	$(DOCKER) push $(IMAGE_NAME)-swift:3.0
 
 deploy: deploy.dev.golang deploy.dev.swift

@@ -1,4 +1,4 @@
-FROM johnnylai/swift:2.2
+FROM johnnylai/swift:3.0
 
 # Extra tooling
 RUN apt-get install -y vim telnet jq
