@@ -25,6 +25,10 @@ $(APP): $(APP_GO_SOURCES)
 		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
 		$(APP_GO_SOURCES)
 
+#- Integration Testing ---------------------------------------------------------
+itest.run: itest.env
+	go test -v $(APP_PACKAGE_NAME)/itest
+  
 #- Dependencies ----------------------------------------------------------------
 
 # Basic dependencies to build go programs

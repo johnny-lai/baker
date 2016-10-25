@@ -1,62 +1,32 @@
-KUBE_SECRETS = $(wildcard $(APP_ITEST_ENV_ROOT)/*-secret.yml)
-KUBE_CONTROLLERS = $(wildcard $(APP_ITEST_ENV_ROOT)/*-controller.yml)
-KUBE_SERVICES = $(wildcard $(APP_ITEST_ENV_ROOT)/*-service.yml)
+include $(BEDROCK_ROOT)/make/itest/$(APP_ITEST_TYPE).mk
 
-export APP_NAME
-export VERSION
-export COMMIT
-export APP_DOCKER_LABEL
-export APP_SECRETS_ROOT
+distitest: distitest.env distitest.run
 
-export PO_APP_NAME = $(APP_NAME)
-export PO_APP_IMAGE = $(APP_DOCKER_LABEL_COMMIT)
-export SVC_APP_NAME = $(PO_APP_NAME)
-
-export PO_DB_NAME = $(APP_NAME)-db
-export PO_DB_IMAGE = $(TESTDB_DOCKER_LABEL_COMMIT)
-export SVC_DB_NAME = $(PO_DB_NAME)
-
-export SECRET_DB_NAME = $(APP_NAME)-db-secret
-
-itest: itest.env itest.run
-
-itest.run:
-	. $(CLUSTER_SH) env $(SVC_APP_NAME) && \
-    echo $$CLUSTER_IP
-	  go test $(APP_NAME)/itest
-
-itest.env: itest.env.stop itest.env.start
-
-itest.env.start: $(BEDROCK)
-	for n in $(KUBE_SECRETS); do \
-		$(BEDROCK) dump $$n | kubectl create -f - ; \
-	done
-	for n in $(KUBE_CONTROLLERS); do \
-		$(BEDROCK) dump $$n | kubectl create -f - ; \
-	done
-	for n in $(KUBE_SERVICES); do \
-		$(BEDROCK) dump $$n | kubectl create -f - ; \
-	done
-	-$(CLUSTER_SH) wait $(SVC_APP_NAME)
-
-itest.env.stop:
-	-kubectl delete all -lapp=$(APP_NAME)
-	-kubectl delete secrets -lapp=$(APP_NAME)
-
-distitest:
-	$(DOCKER) run --rm --net=host \
-	           $(DOCKER_OPTS) \
-	           $(DOCKER_DEVIMAGE) \
-						 make itest
-
+ifeq ($(TESTDB_DOCKER_LABEL),)
+#- No Test Database ------------------------------------------------------------
 distitest.env:
-	$(DOCKER) run --rm --net=host \
-	           $(DOCKER_OPTS) \
-	           $(DOCKER_DEVIMAGE) \
-						 make itest.env
 
 distitest.run:
-	$(DOCKER) run --rm --net=host \
+	$(DOCKER) run --rm \
+	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
 	           $(DOCKER_OPTS) \
+	           $(DOCKER_UTEST_OPTS) \
 	           $(DOCKER_DEVIMAGE) \
-	           make itest.run
+	           make itest
+else
+#- Has Test Database -----------------------------------------------------------
+# Re-use unit test database
+
+distitest.env: distutest.testdb.run
+	sleep 5
+
+distitest.run:
+	$(DOCKER) run --rm \
+	           --link $(APP_NAME)-testdb:$(APP_NAME)-db \
+	           -e TEST_CONFIG_YML=$(TEST_CONFIG_YML_D) \
+	           $(DOCKER_OPTS) \
+	           $(DOCKER_UTEST_OPTS) \
+	           $(DOCKER_DEVIMAGE) \
+	           make itest
+
+endif
