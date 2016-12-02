@@ -60,7 +60,7 @@ image-testdb.push:
 
 image-testdb.publish:
 	if [ "$(APP_DOCKER_PUSH)" != "no" ]; then \
-		$(DOCKER_PUSH) $(TESTDB_DOCKER_LABEL); \
+		$(DOCKER_PUSH) $(TESTDB_DOCKER_LABEL_COMMIT); \
 		$(DOCKER_PUSH) $(TESTDB_DOCKER_LABEL_VERSION); \
 	fi
 
@@ -76,6 +76,6 @@ image-dist.push:
 
 image-dist.publish:
 	if [ "$(APP_DOCKER_PUSH)" != "no" ]; then \
-		$(DOCKER_PUSH) $(APP_DOCKER_LABEL); \
+		$(DOCKER_PUSH) $(APP_DOCKER_LABEL_COMMIT); \
 		$(DOCKER_PUSH) $(APP_DOCKER_LABEL_VERSION); \
 	fi
