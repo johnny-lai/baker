@@ -1,6 +1,7 @@
 # These are local paths
 SRCROOT ?= $(abspath .)
 BUILD_ROOT ?= $(SRCROOT)
+TARGET_BUILD_DIR ?= $(BUILD_ROOT)
 DOCKER_ROOT ?= $(SRCROOT)/docker
 TEST_CONFIG_YML ?= $(SRCROOT)/config/test.yml
 
@@ -19,7 +20,7 @@ APP_DOCKER_PUSH ?= yes
 APP_SECRETS_ROOT ?= $(HOME)/.secrets/$(APP_NAME)
 APP_ITEST_TYPE ?= cmdline
 APP_ITEST_ENV_ROOT ?= $(SRCROOT)/itest/env
-APP ?= $(BUILD_ROOT)/$(APP_NAME)
+APP ?= $(TARGET_BUILD_DIR)/$(APP_NAME)
 
 # These are paths used in the docker image
 SRCROOT_D = /go/src/$(APP_PACKAGE_NAME)
