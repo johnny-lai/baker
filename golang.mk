@@ -17,10 +17,15 @@ APP_GO_LINKING ?= static
 APP_GO_SOURCES ?= main.go
 APP_GO_PACKAGES ?= $(APP_NAME) $(APP_NAME)/core/service
 APP_GO_GLIDE_CHECK ?= vendor/github.com/onsi/ginkgo/README.md
+APP_GO_HOST_ARCH ?= $(shell $(shell go env); echo $${GOOS}_$${GOARCH})
+APP_GO_ARCHS ?= $(APP_GO_HOST_ARCH)
 
 #- Build -----------------------------------------------------------------------
-$(APP): $(APP_GO_SOURCES)
-	$(GO_ENV) go build $(GO_CFLAGS) \
+$(APP): $(patsubst %,$(APP)_%,$(APP_GO_ARCHS))
+	ln -sf $(APP)_$(APP_GO_HOST_ARCH) $(APP)
+
+$(APP)_%: $(APP_GO_SOURCES)
+	GOOS=$(subst _, GOARCH=,$*) $(GO_ENV) go build $(GO_CFLAGS) \
 		-o $@ \
 		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
 		$(APP_GO_SOURCES)
