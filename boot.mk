@@ -12,11 +12,10 @@ migrate:
 	./cmd/server/server --config config.yaml migratedb
 
 fmt:
-	GO15VENDOREXPERIMENT=1 go fmt $(APP_GO_PACKAGES)
+	go fmt $(APP_GO_PACKAGES)
 
 devconsole:
 	docker run --rm \
-	           -e GO15VENDOREXPERIMENT=1 \
 	           -it \
 	           $(DOCKER_OPTS) \
 	           $(DOCKER_DEVIMAGE)

@@ -3,10 +3,10 @@ include $(BEDROCK_ROOT)/boot.mk
 
 # GO flags
 ifeq ($(APP_GO_LINKING), static)
-	GO_ENV ?= GO15VENDOREXPERIMENT=1 CGO_ENABLED=0
+	GO_ENV ?= CGO_ENABLED=0
 	GO_CFLAGS ?= -a
 else
-	GO_ENV ?= GO15VENDOREXPERIMENT=1
+	GO_ENV ?=
 	GO_CFLAGS ?=
 endif
 

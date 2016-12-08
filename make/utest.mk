@@ -1,5 +1,5 @@
 utest: deps
-	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) GO15VENDOREXPERIMENT=1 go test $(APP_GO_PACKAGES)
+	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) go test $(APP_GO_PACKAGES)
 
 distutest: distutest.env distutest.run
 
