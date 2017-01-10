@@ -1,6 +1,3 @@
-utest: deps
-	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) go test $(APP_GO_PACKAGES)
-
 distutest: distutest.env distutest.run
 
 ifeq ($(TESTDB_DOCKER_LABEL),)

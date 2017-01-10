@@ -10,6 +10,8 @@ else
 	GO_CFLAGS ?=
 endif
 
+GO_TEST ?= go test
+
 DOCKER_DEVIMAGE ?= johnnylai/bedrock-dev-golang:1.7
 FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 
@@ -31,9 +33,13 @@ $(APP)_%: $(APP_GO_SOURCES)
 		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
 		$(APP_GO_SOURCES)
 
+#- Unit Tests ------------------------------------------------------------------
+utest: deps
+	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) $(GO_TEST) $(APP_GO_PACKAGES)
+
 #- Integration Testing ---------------------------------------------------------
 itest.run: itest.env
-	go test -v $(APP_PACKAGE_NAME)/itest
+	$(GO_TEST) -v $(APP_PACKAGE_NAME)/itest
   
 #- Dependencies ----------------------------------------------------------------
 
