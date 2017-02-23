@@ -52,7 +52,8 @@ endif
 
 DOCKER_DEV_UID ?= $(shell which docker-machine &> /dev/null || id -u)
 DOCKER_DEV_GID ?= $(shell which docker-machine &> /dev/null || id -g)
-DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
+DOCKER_OPTS ?= $(DOCKER_EXTRA_OPTS) \
+               -v $(SRCROOT):$(SRCROOT_D) \
                -v $(KUBERNETES_CONFIG):/home/dev/.kube/config \
                -v $(KUBERNETES_CONFIG):/root/.kube/config \
                -v $(APP_SECRETS_ROOT):$(APP_SECRETS_ROOT_D) \
@@ -62,8 +63,6 @@ DOCKER_OPTS ?= -v $(SRCROOT):$(SRCROOT_D) \
                -e "DOCKER_VER_NUM=$(DOCKER_VER_NUM)" \
                -e BUILD_ROOT=$(BUILD_ROOT_D) \
                -e APP_SECRETS_ROOT=$(APP_SECRETS_ROOT_D) \
-               -e MAJOR_VERSION=$(MAJOR_VERSION) \
-               -e MINOR_VERSION=$(MINOR_VERSION) \
                -e BUILD_NUMBER=$(BUILD_NUMBER) \
                -e DEV_UID=$(DOCKER_DEV_UID) \
                -e DEV_GID=$(DOCKER_DEV_GID) \
