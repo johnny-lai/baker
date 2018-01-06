@@ -1,7 +1,7 @@
 BEDROCK = $(SRCROOT)/tmp/dist/bedrock
 BEDROCK_D = $(SRCROOT_D)/tmp/dist/bedrock
 		
-BEDROCK_DOCKER_IMAGE = johnnylai/bedrock-dev-golang:1.7
+BEDROCK_DOCKER_IMAGE = johnnylai/bedrock-dev-golang:1.9
 BEDROCK_DOCKER_OPTS = $(DOCKER_OPTS) \
 			  -v $(BEDROCK_ROOT):$(BEDROCK_ROOT_D)
 

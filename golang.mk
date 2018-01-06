@@ -12,7 +12,7 @@ endif
 
 GO_TEST ?= go test
 
-DOCKER_DEVIMAGE ?= johnnylai/bedrock-dev-golang:1.7
+DOCKER_DEVIMAGE ?= johnnylai/bedrock-dev-golang:1.9
 FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 
 APP_GO_LINKING ?= static
