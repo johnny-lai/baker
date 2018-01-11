@@ -58,3 +58,4 @@ clean: clean.go
 clean.go:
 	go clean
 	git clean -ffxd vendor
+	rm $(APP_ALL_ARCHS)
