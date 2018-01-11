@@ -1,5 +1,6 @@
 # These are local paths
 SRCROOT ?= $(abspath .)
+WORKSPACE_ROOT ?= $(SRCROOT)
 BUILD_ROOT ?= $(SRCROOT)
 TARGET_BUILD_DIR ?= $(BUILD_ROOT)
 DOCKER_ROOT ?= $(SRCROOT)/docker
@@ -23,11 +24,12 @@ APP_ITEST_ENV_ROOT ?= $(SRCROOT)/itest/env
 APP ?= $(TARGET_BUILD_DIR)/$(APP_NAME)
 
 # These are paths used in the docker image
-SRCROOT_D = /go/src/$(APP_PACKAGE_NAME)
-BUILD_ROOT_D = $(SRCROOT_D)/tmp/dist
-BEDROCK_ROOT_D = $(SRCROOT_D)/vendor/github.com/johnny-lai/bedrock
-TEST_CONFIG_YML_D = $(SRCROOT_D)/config/production.yml
-APP_SECRETS_ROOT_D = /etc/secrets
+SRCROOT_D ?= /go/src/$(APP_PACKAGE_NAME)
+WORKSPACE_ROOT_D ?= $(SRCROOT_D)
+BUILD_ROOT_D ?= $(SRCROOT_D)/tmp/dist
+BEDROCK_ROOT_D ?= $(SRCROOT_D)/vendor/github.com/johnny-lai/bedrock
+TEST_CONFIG_YML_D ?= $(SRCROOT_D)/config/production.yml
+APP_SECRETS_ROOT_D ?= /etc/secrets
 
 # Docker Labels
 APP_DOCKER_LABEL_VERSION = $(APP_DOCKER_LABEL):$(MAJOR_VERSION).$(MINOR_VERSION)
@@ -49,11 +51,10 @@ else
 DOCKER_OPT_TAG_FORCE=-f
 endif
 
-
 DOCKER_DEV_UID ?= $(shell which docker-machine &> /dev/null || id -u)
 DOCKER_DEV_GID ?= $(shell which docker-machine &> /dev/null || id -g)
 DOCKER_OPTS ?= $(DOCKER_EXTRA_OPTS) \
-               -v $(SRCROOT):$(SRCROOT_D) \
+               -v $(WORKSPACE_ROOT):$(WORKSPACE_ROOT_D) \
                -v $(KUBERNETES_CONFIG):/home/dev/.kube/config \
                -v $(KUBERNETES_CONFIG):/root/.kube/config \
                -v $(APP_SECRETS_ROOT):$(APP_SECRETS_ROOT_D) \
