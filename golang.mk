@@ -44,18 +44,18 @@ itest.run: itest.env
 #- Dependencies ----------------------------------------------------------------
 
 # Basic dependencies to build go programs
-deps: $(GLIDE) $(BUILD_ROOT) $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
+deps: $(GLIDE) $(BUILD_ROOT) $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
 
-$(SRCROOT)/$(APP_GO_GLIDE_CHECK): $(SRCROOT)/glide.yaml
-	$(GLIDE) install
+$(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK): $(WORKSPACE_ROOT)/glide.yaml
+	cd $(WORKSPACE_ROOT) && $(GLIDE) install
 
 glide_touch:
-	touch $(SRCROOT)/$(APP_GO_GLIDE_CHECK)
+	touch $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
   
 #- Clean -----------------------------------------------------------------------
 clean: clean.go
 
 clean.go:
 	go clean
-	git clean -ffxd vendor
+	git clean -ffxd $(WORKSPACE_ROOT)/vendor
 	rm $(APP_ALL_ARCHS)
