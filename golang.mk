@@ -35,7 +35,7 @@ $(APP)_%: $(APP_GO_SOURCES)
 
 #- Unit Tests ------------------------------------------------------------------
 utest: deps
-	TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) $(GO_TEST) $(APP_GO_PACKAGES)
+	TEST_APP=$(APP) TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) $(GO_TEST) $(APP_GO_PACKAGES)
 
 #- Integration Testing ---------------------------------------------------------
 itest.run: itest.env
