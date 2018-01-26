@@ -17,6 +17,7 @@ FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 
 APP_GO_LINKING ?= static
 APP_GO_SOURCES ?= main.go
+APP_GO_DEPS ?=
 APP_GO_PACKAGES ?= $(APP_NAME) $(APP_NAME)/core/service
 APP_GO_GLIDE_CHECK ?= vendor/github.com/onsi/ginkgo/README.md
 APP_GO_HOST_ARCH ?= $(shell $(shell go env); echo $${GOOS}_$${GOARCH})
@@ -27,7 +28,7 @@ APP_ALL_ARCHS = $(patsubst %,$(APP)_%,$(APP_GO_ARCHS))
 $(APP): $(APP_ALL_ARCHS)
 	ln -sf $(APP)_$(APP_GO_HOST_ARCH) $(APP)
 
-$(APP)_%: $(APP_GO_SOURCES)
+$(APP)_%: $(APP_GO_SOURCES) $(APP_GO_DEPS)
 	GOOS=$(subst _, GOARCH=,$*) $(GO_ENV) go build $(GO_CFLAGS) \
 		-o $@ \
 		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
