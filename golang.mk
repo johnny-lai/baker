@@ -35,12 +35,16 @@ $(APP)_%: $(APP_GO_SOURCES) $(APP_GO_DEPS)
 		$(APP_GO_SOURCES)
 
 #- Unit Tests ------------------------------------------------------------------
+ifeq ($(BAKER_INCLUDE_UTEST_MK),yes)
 utest: deps
 	TEST_APP=$(APP) TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) $(GO_TEST) $(APP_GO_PACKAGES)
+endif
 
 #- Integration Testing ---------------------------------------------------------
+ifeq ($(BAKER_INCLUDE_ITEST_MK),yes)
 itest.run: itest.env
 	$(GO_TEST) -v $(APP_PACKAGE_NAME)/itest
+endif
   
 #- Dependencies ----------------------------------------------------------------
 
