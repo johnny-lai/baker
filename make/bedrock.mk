@@ -12,3 +12,8 @@ $(BEDROCK): $(BEDROCK_ROOT)/cli/bedrock.go $(GO_BASE_DEPENDENCIES)
 	          $(BEDROCK_DOCKER_OPTS) \
 			  $(BEDROCK_DOCKER_IMAGE) \
 			  go build -o $(BEDROCK_D) $(BEDROCK_ROOT_D)/cli/bedrock.go
+
+clean: clean.bedrock
+
+clean.bedrock:
+	rm -f $(BEDROCK)

@@ -63,4 +63,4 @@ clean: clean.go
 clean.go:
 	go clean
 	git clean -ffxd $(WORKSPACE_ROOT)/vendor
-	rm $(APP_ALL_ARCHS)
+	rm -f $(APP_ALL_ARCHS)

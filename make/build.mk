@@ -3,7 +3,6 @@ build: deps $(APP)
 $(APP): $(BUILD_ROOT)
 
 clean:
-	rm -f $(BEDROCK)
 	rm -f $(APP)
 
 dist: image-dist image-testdb
