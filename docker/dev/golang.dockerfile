@@ -2,7 +2,8 @@ FROM golang:1.9
 
 # Install go
 RUN go get -u github.com/derekparker/delve/cmd/dlv && \
-	go get github.com/Masterminds/glide
+	go get github.com/Masterminds/glide && \
+	go get -u github.com/golang/dep/cmd/dep
 
 # Install Kubernetes
 RUN apt-get update && apt-get install -y lsb-release vim sudo
