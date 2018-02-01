@@ -18,8 +18,9 @@ FIXTURES_ROOT_D = $(BEDROCK_ROOT_D)/fixtures/golang
 APP_GO_LINKING ?= static
 APP_GO_SOURCES ?= main.go
 APP_GO_DEPS ?=
+APP_GO_PACKAGE_MANAGER ?= dep
 APP_GO_PACKAGES ?= $(APP_NAME) $(APP_NAME)/core/service
-APP_GO_GLIDE_CHECK ?= vendor/github.com/onsi/ginkgo/README.md
+APP_GO_VENDOR_CHECK ?= $(WORKSPACE_ROOT)/vendor/.vendor_check
 APP_GO_HOST_ARCH ?= $(shell $(shell go env); echo $${GOOS}_$${GOARCH})
 APP_GO_ARCHS ?= $(APP_GO_HOST_ARCH)
 APP_ALL_ARCHS = $(patsubst %,$(APP)_%,$(APP_GO_ARCHS))
@@ -47,12 +48,22 @@ itest.run: itest.env
 endif
   
 #- Dependencies ----------------------------------------------------------------
+DEP ?= dep
 
 # Basic dependencies to build go programs
-deps: $(GLIDE) $(BUILD_ROOT) $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
+deps: $(BUILD_ROOT) $(APP_GO_VENDOR_CHECK)
 
-$(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK): $(WORKSPACE_ROOT)/glide.yaml
+ifeq ($(APP_GO_PACKAGE_MANAGER),glide)
+$(APP_GO_VENDOR_CHECK): $(WORKSPACE_ROOT)/glide.yaml $(WORKSPACE_ROOT)/glide.lock
 	cd $(WORKSPACE_ROOT) && $(GLIDE) install
+	touch $(APP_GO_VENDOR_CHECK)
+endif
+
+ifeq ($(APP_GO_PACKAGE_MANAGER),dep)
+$(APP_GO_VENDOR_CHECK): $(WORKSPACE_ROOT)/Gopkg.toml $(WORKSPACE_ROOT)/Gopkg.lock
+	cd $(WORKSPACE_ROOT) && $(DEP) ensure
+	touch $(APP_GO_VENDOR_CHECK)
+endif
 
 glide_touch:
 	touch $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
