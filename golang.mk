@@ -65,9 +65,6 @@ $(APP_GO_VENDOR_CHECK): $(WORKSPACE_ROOT)/Gopkg.toml $(WORKSPACE_ROOT)/Gopkg.loc
 	touch $(APP_GO_VENDOR_CHECK)
 endif
 
-glide_touch:
-	touch $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
-  
 #- Clean -----------------------------------------------------------------------
 clean: clean.go
 
