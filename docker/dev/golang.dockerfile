@@ -21,4 +21,6 @@ COPY docker/dev/entrypoint.sh /entrypoint.sh
 
 COPY scripts/cluster.sh /bin/cluster.sh
 
+RUN chmod -R a+w /go/pkg
+
 ENTRYPOINT ["/entrypoint.sh"]
