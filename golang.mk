@@ -27,7 +27,7 @@ APP_ALL_ARCHS = $(patsubst %,$(APP)_%,$(APP_GO_ARCHS))
 
 #- Build -----------------------------------------------------------------------
 $(APP): $(APP_ALL_ARCHS)
-	ln -sf $(APP)_$(APP_GO_HOST_ARCH) $(APP)
+	cp $(APP) $(APP)_$(APP_GO_HOST_ARCH)
 
 $(APP)_%: $(APP_GO_SOURCES) $(APP_GO_DEPS) $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
 	GOOS=$(subst _, GOARCH=,$*) $(GO_ENV) go build $(GO_CFLAGS) \
