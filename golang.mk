@@ -43,8 +43,8 @@ endif
 
 #- Integration Testing ---------------------------------------------------------
 ifeq ($(BAKER_INCLUDE_ITEST_MK),yes)
-itest.run: itest.env
-	$(GO_TEST) -v $(APP_PACKAGE_NAME)/itest
+itest: itest.env
+	TEST_APP=$(APP) TEST_CONFIG_YML=$(TEST_CONFIG_YML) SRCROOT=$(SRCROOT) $(GO_TEST) -v $(APP_PACKAGE_NAME)/itest
 endif
   
 #- Dependencies ----------------------------------------------------------------
