@@ -32,7 +32,7 @@ $(APP): $(APP_ALL_ARCHS)
 $(APP)_%: $(APP_GO_SOURCES) $(APP_GO_DEPS) $(WORKSPACE_ROOT)/$(APP_GO_GLIDE_CHECK)
 	GOOS=$(subst _, GOARCH=,$*) $(GO_ENV) go build $(GO_CFLAGS) \
 		-o $@ \
-		-ldflags "-X main.version=$(VERSION)-$(COMMIT)" \
+		-ldflags "-X main.version=$(VERSION)" -ldflags "-X main.revision=$(COMMIT)" \
 		$(APP_GO_SOURCES)
 
 #- Unit Tests ------------------------------------------------------------------
