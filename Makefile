@@ -11,7 +11,7 @@ fmt:
 
 image.dev.golang:
 	$(DOCKER) build -t $(IMAGE_NAME)-golang -f docker/dev/golang.dockerfile .
-	$(DOCKER) tag $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:1.9
+	$(DOCKER) tag $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:1.14
 	$(DOCKER) tag $(IMAGE_NAME)-golang $(IMAGE_NAME)-golang:$(COMMIT)
 
 image.swift:
@@ -24,7 +24,7 @@ image.dev.swift: image.swift
 
 deploy.dev.golang: image.dev.golang
 	$(DOCKER) push $(IMAGE_NAME)-golang
-	$(DOCKER) push $(IMAGE_NAME)-golang:1.9
+	$(DOCKER) push $(IMAGE_NAME)-golang:1.14
 	
 deploy.dev.swift: image.dev.swift
 	$(DOCKER) push $(IMAGE_NAME)-swift

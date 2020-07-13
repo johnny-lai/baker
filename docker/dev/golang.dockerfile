@@ -1,4 +1,4 @@
-FROM golang:1.9
+FROM golang:1.14
 
 # Install go
 RUN go get -u github.com/derekparker/delve/cmd/dlv && \
@@ -20,7 +20,5 @@ COPY docker/dev/Makefile /go/Makefile
 COPY docker/dev/entrypoint.sh /entrypoint.sh
 
 COPY scripts/cluster.sh /bin/cluster.sh
-
-RUN chmod -R a+w /go/pkg
 
 ENTRYPOINT ["/entrypoint.sh"]
